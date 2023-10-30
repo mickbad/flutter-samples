@@ -3,10 +3,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_essais/views/defaultdesign_page.dart';
 import 'package:riverpod_essais/views/home_page.dart';
 
-import 'controlers/providers.dart';
+import 'controlers/log.dart';
 import 'controlers/route_generator.dart';
 
-void main() {
+void main() async {
+  // for logging to file (notamment)
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // init log
+  await logger.cleanFileLogs();
+  logger.logLevel = LogLevel.trace;
+  logger.i("Riverpod works!");
+  logger.i("Log file : ${logger.pathname}");
+
+  // start app
   runApp(const MyApp());
 }
 
@@ -29,24 +39,24 @@ class MainObserver implements ProviderObserver {
   @override
   void didAddProvider(
       ProviderBase provider, Object? value, ProviderContainer container) {
-    debugPrint('Added: $provider : $value(${value.runtimeType})');
+    logger.t('Added: $provider : $value(${value.runtimeType})');
   }
 
   @override
   void didDisposeProvider(ProviderBase provider, ProviderContainer container) {
-    debugPrint('Disposed: $provider');
+    logger.t('Disposed: $provider');
   }
 
   @override
   void didUpdateProvider(ProviderBase provider, Object? previousValue,
       Object? newValue, ProviderContainer container) {
-    debugPrint('Update: $provider : $newValue');
+    logger.t('Update: $provider : $newValue');
   }
 
   @override
   void providerDidFail(ProviderBase provider, Object error, StackTrace stackTrace, ProviderContainer container) {
     // TODO: implement providerDidFail
-    debugPrint('Failed update: $provider : $error');
+    logger.t('Failed update: $provider : $error');
   }
 }
 

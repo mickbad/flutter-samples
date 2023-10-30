@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../controlers/log.dart';
 import '../controlers/providers.dart';
 import '../models/counter_model.dart';
 
@@ -18,7 +19,7 @@ class HomeViewState extends ConsumerState<HomePage> {
     super.initState;
     // "ref" can be used in all life-cycles of a StatefulWidget.
     final a = ref.read(counterProviderA);
-    debugPrint(a.counter.toString());
+    logger.i("home_page : counterA = ${a.counter}");
   }
 
   @override
@@ -83,6 +84,14 @@ class HomeViewState extends ConsumerState<HomePage> {
               Navigator.pushNamed(context, "/random");
             },
             child: const Text('Random Page'),
+          ),
+          SizedBox.fromSize(size: const Size(10, 10)),
+
+          ElevatedButton(
+            onPressed: () {
+              logger.logFile = !logger.logFile;
+            },
+            child: Text((!logger.logFile ? "Start file logging" : "Stop file logging")),
           ),
         ],
       ),

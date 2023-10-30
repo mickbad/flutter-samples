@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../controlers/log.dart';
+
 ///
 /// Création du modèle de données pour les compteurs
 ///
@@ -35,25 +37,25 @@ class CounterModel extends ChangeNotifier {
   set counter(int value) {
     _counter = value;
     notifyListeners();
-    debugPrint("set new counter value = $_counter");
+    logger.d("set new counter value = $_counter");
   }
 
   void incrementCounter() {
     _counter++;
     notifyListeners();
-    debugPrint("increment counter = $_counter");
+    logger.d("increment counter = $_counter");
   }
 
   void decrementCounter() {
     _counter--;
     notifyListeners();
-    debugPrint("decrement counter = $_counter");
+    logger.d("decrement counter = $_counter");
   }
 
   void resetCounter() {
     _counter = 0;
     notifyListeners();
-    debugPrint("reset counter = $_counter");
+    logger.d("reset counter = $_counter");
   }
 
 }

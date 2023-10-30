@@ -38,6 +38,9 @@ dependencies:
   flutter_hooks: any
   hooks_riverpod: any
 
+  intl: any
+  path_provider: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

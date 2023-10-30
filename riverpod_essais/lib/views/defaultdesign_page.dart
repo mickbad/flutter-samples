@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../controlers/log.dart';
 import '../controlers/providers.dart';
 
 ///
@@ -31,7 +32,7 @@ class AppDefaultDesign extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.home, color: (childName == 'home') ? Colors.orangeAccent : colorInactive),
               onPressed: () {
-                debugPrint("Go to home");
+                logger.d("Go to home");
                 Navigator.pushReplacementNamed(context, '/');
               },
             ),
@@ -39,7 +40,7 @@ class AppDefaultDesign extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.search, color: (childName == 'search') ? Colors.orangeAccent : colorInactive),
               onPressed: () {
-                debugPrint("Go to search");
+                logger.d("Go to search");
                 Navigator.pushReplacementNamed(context, '/search');
               },
             ),
@@ -47,7 +48,7 @@ class AppDefaultDesign extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.settings, color: (childName == 'settings') ? Colors.orangeAccent : colorInactive),
               onPressed: () {
-                debugPrint("Go to settings");
+                logger.d("Go to settings");
                 Navigator.pushReplacementNamed(context, '/settings');
               },
             ),

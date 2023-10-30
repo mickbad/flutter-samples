@@ -2,6 +2,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/counter_model.dart';
 
+///
+/// Counters providers
+///
+
 final counterProviderA = ChangeNotifierProvider<CounterModel>((ref) {
   return CounterModel();
 });
