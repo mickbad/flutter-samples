@@ -56,7 +56,7 @@ class MainObserver implements ProviderObserver {
   @override
   void providerDidFail(ProviderBase provider, Object error, StackTrace stackTrace, ProviderContainer container) {
     // TODO: implement providerDidFail
-    logger.t('Failed update: $provider : $error');
+    logger.e('Failed update: $provider : $error');
   }
 }
 
