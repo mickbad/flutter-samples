@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 /// Application logger
 ///
 final logger = MyAppLogger.storeAppDocuments(
-    filename: 'log.txt',
+    filename: 'var/log.txt',
     maxLogFileLines: 1000,
     level: LogLevel.info,
 );
@@ -39,29 +39,43 @@ class MyAppLogger {
   // properties
   bool _mustConstructPathname = false;
   bool _logFile = false;
+  bool showEmojis;
   int maxLogFileLines;
   LogLevel level;
   String? pathname;
 
+  static final Map<LogLevel, String> levelEmojis = {
+    LogLevel.trace: '🐾',
+    LogLevel.debug: '👀',
+    LogLevel.info: '💡',
+    LogLevel.warn: '⚠️',
+    LogLevel.error: '‼️',
+    LogLevel.fatal: '💥',
+  };
+
   ///
-  /// Constructor
+  /// Constructors
   ///
   MyAppLogger({
     this.pathname,
-    this.maxLogFileLines = 1000,
+    this.maxLogFileLines = 1024,
     this.level = LogLevel.info,
-  }) : super() {
+    this.showEmojis = true,
+  }) {
     // check arguments
-    maxLogFileLines = maxLogFileLines < 0 ? 1000 : maxLogFileLines;
+    maxLogFileLines = maxLogFileLines < 0 ? 1024 : maxLogFileLines;
     if (pathname != null) {
+      // check arguments
+      assert(pathname!.isNotEmpty);
       _logFile = true;
     }
   }
 
   factory MyAppLogger.storeAppDocuments({
     String filename = 'log.txt',
-    int maxLogFileLines = 1000,
+    int maxLogFileLines = 1024,
     LogLevel level = LogLevel.info,
+    bool showEmojis = true,
   }) {
     // check arguments
     assert(filename.isNotEmpty);
@@ -72,6 +86,7 @@ class MyAppLogger {
       pathname: filename,
       maxLogFileLines: maxLogFileLines,
       level: level,
+      showEmojis: showEmojis,
     ).._mustConstructPathname = true
     ..logFile = true;
   }
@@ -82,7 +97,12 @@ class MyAppLogger {
   bool get logFile => _logFile;
   set logFile(bool value) {
     // inform maintainer-user
-    i((value ? "Starting log file" : "Stop log file"), force: true);
+    if (value) {
+      i("Starting log file", force: true);
+    }
+    else {
+      w("Stop log file", force: true);
+    }
     _logFile = value;
   }
 
@@ -116,7 +136,12 @@ class MyAppLogger {
     final now = DateTime.now();
 
     // add date and time
-    line = "[${f.format(now)}.${now.millisecond}] [${prefix.toString().replaceAll('LogLevel.', '').toUpperCase()}] $line";
+    line = "[${f.format(now)}.${now.millisecond.toString().padRight(3, '0')}] [${prefix.name.toUpperCase()}] $line";
+
+    // emoji
+    if (showEmojis) {
+      line = "${levelEmojis[prefix]} $line";
+    }
 
     // console
     debugPrint(line);

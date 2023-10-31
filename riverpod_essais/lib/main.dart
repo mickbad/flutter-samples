@@ -11,10 +11,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // init log
-  await logger.cleanFileLogs();
   logger.logLevel = LogLevel.trace;
+  logger.showEmojis = true;
+  await logger.cleanFileLogs();
+
+  // log app starting
   logger.i("Riverpod works!");
-  logger.i("Log file : ${logger.pathname}");
+  logger.w("Log file : ${logger.pathname}");
+
+  // testing log
+  logger.t("test TRACE message");
+  logger.d("test DEBUG message");
+  logger.i("test INFO message");
+  logger.w("test WARNING message");
+  logger.e("test ERROR message");
+  logger.f("test FATAL message");
 
   // start app
   runApp(const MyApp());
